@@ -9,9 +9,9 @@ import frc.robot.subsystems.MotorTalonSRX;
 
 public class RobotContainer {
     
-    private final LogitechController operatorController = new LogitechController(2);
+    //private final LogitechController operatorController = new LogitechController(0);
     //private final WPI_TalonSRX motorOne = new WPI_TalonSRX(Constants.MotorOne.MOTOR_ID);
-    private final MotorTalonSRX motorOne = new MotorTalonSRX();
+    //private final MotorTalonSRX motorOne = new MotorTalonSRX();
     //public final Auto auto;
 
     public RobotContainer() {
@@ -20,7 +20,7 @@ public class RobotContainer {
     }           
 
     private void configureBindings() {
-        operatorController.getA().whileTrue(motorOne.setSpeed(100));
+        //operatorController.getA().whileTrue(motorOne.setSpeed(100)).whileFalse(motorOne.setSpeed(0));
         
     }
 
