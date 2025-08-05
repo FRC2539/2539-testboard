@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class MotorTalonSRX extends SubsystemBase {
     /** Creates a new Digital Sensor */
@@ -17,7 +18,7 @@ public class MotorTalonSRX extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public MotorTalonSRX() {
     m_proximitySensor = new DigitalInput(0);
-    m_motor = new TalonSRX(0);
+    m_motor = new TalonSRX(Constants.MotorOne.MOTOR_ID);
   }
 
   /** Run motor at half speed during command */
@@ -26,6 +27,13 @@ public class MotorTalonSRX extends SubsystemBase {
       () -> m_motor.set(ControlMode.PercentOutput, 0.5), 
       () -> m_motor.set(ControlMode.PercentOutput, 0)
     );
+  }
+
+  public Command setFalconVoltage(int speed) {
+    return runOnce(
+        () -> {
+          m_motor.set(ControlMode.PercentOutput, speed);
+        });
   }
 
   @Override
@@ -37,7 +45,10 @@ public class MotorTalonSRX extends SubsystemBase {
     return m_proximitySensor.get();
   }
 
-  public void setRawMotorSpeed(double speed) {
-    m_motor.set(ControlMode.PercentOutput, speed);
+  public Command setSpeed(double speed) {
+    return runOnce(
+        () -> {
+          m_motor.set(ControlMode.PercentOutput, speed);
+        });
   }
 }

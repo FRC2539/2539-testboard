@@ -20,7 +20,7 @@ public class RobotContainer {
     }           
 
     private void configureBindings() {
-        operatorController.getA().whileTrue(motorOne.runMotorCommand());
+        operatorController.getA().whileTrue(motorOne.setSpeed(100));
         
     }
 
