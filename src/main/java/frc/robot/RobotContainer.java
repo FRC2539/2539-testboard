@@ -3,15 +3,19 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.lib.controller.LogitechController;
 //import frc.lib.controller.ThrustmasterJoystick;
 import frc.robot.subsystems.MotorTalonSRX;
 
+
+
 public class RobotContainer {
     
-    //private final LogitechController operatorController = new LogitechController(0);
-    //private final WPI_TalonSRX motorOne = new WPI_TalonSRX(Constants.MotorOne.MOTOR_ID);
-    //private final MotorTalonSRX motorOne = new MotorTalonSRX();
+    private final LogitechController operatorController = new LogitechController(0);
+    //private final MotorTalonSRX motorOne = new MotorTalonSRX(Constants.MotorOne.MOTOR_ID);
+    //private final DriveTrain m_driveTrain = new DriveTrain();
+    private final MotorTalonSRX motors = new MotorTalonSRX();
     //public final Auto auto;
 
     public RobotContainer() {
@@ -20,8 +24,15 @@ public class RobotContainer {
     }           
 
     private void configureBindings() {
-        //operatorController.getA().whileTrue(motorOne.setSpeed(100)).whileFalse(motorOne.setSpeed(0));
-        
+        operatorController.getA().whileTrue(motors.setSpeed1(1.0)).whileFalse(motors.setSpeed1(0.0));
+        motors.setDefaultCommand(
+            new RunCommand(
+                () -> motors.setSpeed1(operatorController.getLeftXAxis().getRaw()),motors)
+        );
+        motors.setDefaultCommand(
+            new RunCommand(
+                () -> motors.setSpeed2(operatorController.getRightXAxis().getRaw()),motors)
+        );
     }
 
 

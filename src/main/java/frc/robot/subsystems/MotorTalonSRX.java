@@ -16,26 +16,28 @@ public class MotorTalonSRX extends SubsystemBase {
   private final LogitechController operatorController = new LogitechController(0);
 
   /** Creates a new SparkMax brushless motor */
-  TalonSRX m_motor;
+  TalonSRX m_motor1;
+  TalonSRX m_motor2;
 
   /** Creates a new DriveSubsystem. */
   public MotorTalonSRX() {
     m_proximitySensor = new DigitalInput(0);
-    m_motor = new TalonSRX(Constants.MotorOne.MOTOR_ID);
+    m_motor1 = new TalonSRX(Constants.MotorOne.MOTOR_ID);
+    m_motor2 = new TalonSRX(Constants.MotorTwo.MOTOR_ID);
   }
 
   /** Run motor at half speed during command */
   public Command runMotorCommand() {
     return runEnd(
-      () -> m_motor.set(ControlMode.PercentOutput, 0.5), 
-      () -> m_motor.set(ControlMode.PercentOutput, 0)
+      () -> m_motor1.set(ControlMode.PercentOutput, 0.5), 
+      () -> m_motor1.set(ControlMode.PercentOutput, 0)
     );
   }
 
   public Command setFalconVoltage(int speed) {
     return runOnce(
         () -> {
-          m_motor.set(ControlMode.PercentOutput, speed);
+          m_motor1.set(ControlMode.PercentOutput, speed);
         });
   }
 
@@ -43,22 +45,26 @@ public class MotorTalonSRX extends SubsystemBase {
     return m_proximitySensor.get();
   }
 
-  public Command setSpeed1() {
+  public Command setSpeed1(double speed) {
     return runOnce(
         () -> {
-          m_motor.set(ControlMode.PercentOutput, getLeftControllerXAxis());
-          System.out.println("left output: "+getLeftControllerXAxis());
+          m_motor1.set(ControlMode.PercentOutput, speed);
+          System.out.println("left output: "+speed);
         });
   }
 
-  public double getLeftControllerXAxis() {
-    return operatorController.getLeftXAxis().getAsDouble();
-}
+  public Command setSpeed2(double speed) {
+    return runOnce(
+        () -> {
+          m_motor2.set(ControlMode.PercentOutput, speed);
+          System.out.println("right output: "+speed);
+        });
+  }
 
 @Override
 public void periodic() {
   // This method will be called once per scheduler run
-  setSpeed1();
+
 }
 
 }
