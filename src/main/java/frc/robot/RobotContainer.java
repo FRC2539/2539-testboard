@@ -30,8 +30,14 @@ public class RobotContainer {
         motors.setDefaultCommand(
         new RunCommand(
             () -> {
-                motors.setSpeed1(operatorController.getLeftXAxis().getRaw());
-                motors.setSpeed2(operatorController.getRightXAxis().getRaw());
+                double leftX = operatorController.getLeftYAxis().getAsDouble(); 
+                double rightX = operatorController.getRightYAxis().getAsDouble();
+                motors.setSpeed1(leftX);
+                motors.setSpeed1(rightX);
+                System.out.println("Left Y-axis raw value: " + leftX);
+                System.out.println("Right Y-axis raw value: " + rightX);
+                //motors.setSpeed1(operatorController.getLeftXAxis().getRaw());
+                //motors.setSpeed2(operatorController.getRightXAxis().getRaw());
             },
             motors
         )
