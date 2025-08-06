@@ -3,15 +3,21 @@ package frc.robot;
 public class Constants {
     public static final class MotorOne {
         public static final int MOTOR_ID = 1;
-        public static final int MOTOR_CURRENT_LIMIT = 60;
-        public static final double MOTOR_VOLTAGE_COMP = 10;
-        public static final double EJECT_VALUE = 0.44;
       }
     public static final class MotorTwo {
         public static final int MOTOR_ID = 2;
-        public static final int MOTOR_CURRENT_LIMIT = 60;
-        public static final double MOTOR_VOLTAGE_COMP = 10;
-        public static final double EJECT_VALUE = 0.44;
+      }
+      public static final class SparkMotorOne {
+        public static final int MOTOR_ID = 1;
+        public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
+        public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
+        public static final double ROLLER_EJECT_VALUE = 0.44;
+      }
+      public static final class SparkMotorTwo {
+        public static final int MOTOR_ID = 2;
+        public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
+        public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
+        public static final double ROLLER_EJECT_VALUE = 0.44;
       }
     
       public static final class OperatorConstants {

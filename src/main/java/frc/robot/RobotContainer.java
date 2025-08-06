@@ -7,15 +7,18 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.lib.controller.LogitechController;
 //import frc.lib.controller.ThrustmasterJoystick;
 import frc.robot.subsystems.MotorTalonSRX;
+import frc.robot.subsystems.MotorSpark;
 
 
 
 public class RobotContainer {
     
     private final LogitechController operatorController = new LogitechController(0);
+    private final LogitechController operatorControllerTwo = new LogitechController(1);
     //private final MotorTalonSRX motorOne = new MotorTalonSRX(Constants.MotorOne.MOTOR_ID);
     //private final DriveTrain m_driveTrain = new DriveTrain();
     private final MotorTalonSRX motors = new MotorTalonSRX();
+    private final MotorSpark sparkmotors = new MotorSpark();
     //public final Auto auto;
 
     public RobotContainer() {
@@ -34,6 +37,11 @@ public class RobotContainer {
                 double rightX = operatorController.getRightYAxis().getAsDouble();
                 motors.setSpeed1(leftX);
                 motors.setSpeed2(rightX);
+
+                double sparkleftX = operatorControllerTwo.getLeftYAxis().getAsDouble(); 
+                double sparkrightX = operatorControllerTwo.getRightYAxis().getAsDouble();
+                sparkmotors.setSpeed1(sparkleftX);
+                sparkmotors.setSpeed2(sparkrightX);
                 //System.out.println("Left Y-axis raw value: " + leftX);
                 //System.out.println("Right Y-axis raw value: " + rightX);
                 //motors.setSpeed1(operatorController.getLeftXAxis().getRaw());

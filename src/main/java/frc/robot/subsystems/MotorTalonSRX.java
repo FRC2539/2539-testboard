@@ -2,18 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.controller.LogitechController;
 import frc.robot.Constants;
 
 public class MotorTalonSRX extends SubsystemBase {
     /** Creates a new Digital Sensor */
-  DigitalInput m_proximitySensor;
-
-  private final LogitechController operatorController = new LogitechController(0);
+  //DigitalInput m_proximitySensor;  
 
   /** Creates a new SparkMax brushless motor */
   TalonSRX m_motor1;
@@ -21,7 +16,7 @@ public class MotorTalonSRX extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public MotorTalonSRX() {
-    m_proximitySensor = new DigitalInput(0);
+    //m_proximitySensor = new DigitalInput(0);
     m_motor1 = new TalonSRX(Constants.MotorOne.MOTOR_ID);
     m_motor2 = new TalonSRX(Constants.MotorTwo.MOTOR_ID);
   }
@@ -41,9 +36,9 @@ public class MotorTalonSRX extends SubsystemBase {
         });
   }
 
-  public boolean isSensorActive() {
-    return m_proximitySensor.get();
-  }
+  // public boolean isSensorActive() {
+  //   return m_proximitySensor.get();
+  // }
 
   public void setSpeed1(double speed) {
     m_motor1.set(ControlMode.PercentOutput, speed);
