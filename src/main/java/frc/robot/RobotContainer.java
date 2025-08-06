@@ -24,8 +24,8 @@ public class RobotContainer {
     }           
 
     private void configureBindings() {
-        operatorController.getA().whileTrue(motors.setSpeed1(1.0)).whileFalse(motors.setSpeed1(0.0));
-        operatorController.getB().whileTrue(motors.setSpeed2(1.0)).whileFalse(motors.setSpeed2(0.0));
+        //operatorController.getA().whileTrue(motors.setSpeed1(1.0)).whileFalse(motors.setSpeed1(0.0));
+        //operatorController.getB().whileTrue(motors.setSpeed2(1.0)).whileFalse(motors.setSpeed2(0.0));
 
         motors.setDefaultCommand(
         new RunCommand(
@@ -33,9 +33,9 @@ public class RobotContainer {
                 double leftX = operatorController.getLeftYAxis().getAsDouble(); 
                 double rightX = operatorController.getRightYAxis().getAsDouble();
                 motors.setSpeed1(leftX);
-                motors.setSpeed1(rightX);
-                System.out.println("Left Y-axis raw value: " + leftX);
-                System.out.println("Right Y-axis raw value: " + rightX);
+                motors.setSpeed2(rightX);
+                //System.out.println("Left Y-axis raw value: " + leftX);
+                //System.out.println("Right Y-axis raw value: " + rightX);
                 //motors.setSpeed1(operatorController.getLeftXAxis().getRaw());
                 //motors.setSpeed2(operatorController.getRightXAxis().getRaw());
             },

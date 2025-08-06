@@ -45,20 +45,14 @@ public class MotorTalonSRX extends SubsystemBase {
     return m_proximitySensor.get();
   }
 
-  public Command setSpeed1(double speed) {
-    return runOnce(
-        () -> {
-          m_motor1.set(ControlMode.PercentOutput, speed);
-          System.out.println("left output: "+speed);
-        });
+  public void setSpeed1(double speed) {
+    m_motor1.set(ControlMode.PercentOutput, speed);
+    System.out.println("left output: " + speed);
   }
 
-  public Command setSpeed2(double speed) {
-    return runOnce(
-        () -> {
-          m_motor2.set(ControlMode.PercentOutput, speed);
-          System.out.println("right output: "+speed);
-        });
+  public void setSpeed2(double speed) {
+    m_motor2.set(ControlMode.PercentOutput, speed);
+    System.out.println("right output: " + speed);
   }
 
 @Override
