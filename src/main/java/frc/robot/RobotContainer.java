@@ -25,13 +25,16 @@ public class RobotContainer {
 
     private void configureBindings() {
         operatorController.getA().whileTrue(motors.setSpeed1(1.0)).whileFalse(motors.setSpeed1(0.0));
+        operatorController.getB().whileTrue(motors.setSpeed2(1.0)).whileFalse(motors.setSpeed2(0.0));
+
         motors.setDefaultCommand(
-            new RunCommand(
-                () -> motors.setSpeed1(operatorController.getLeftXAxis().getRaw()),motors)
-        );
-        motors.setDefaultCommand(
-            new RunCommand(
-                () -> motors.setSpeed2(operatorController.getRightXAxis().getRaw()),motors)
+        new RunCommand(
+            () -> {
+                motors.setSpeed1(operatorController.getLeftXAxis().getRaw());
+                motors.setSpeed2(operatorController.getRightXAxis().getRaw());
+            },
+            motors
+        )
         );
     }
 
