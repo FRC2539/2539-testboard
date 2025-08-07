@@ -39,9 +39,12 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledPeriodic() {
     // Indicate if the battery is at voltage
-        if (RobotController.getBatteryVoltage() > 12.3)
-            LEDSegment.BatteryIndicator.setColor(Lights.green.dim(1));
-        else LEDSegment.BatteryIndicator.setFadeAnimation(Lights.green.dim(0.25), 1);
+        if (RobotController.getBatteryVoltage() > 12.3){
+          System.out.println("lights battery voltage: " + RobotController.getBatteryVoltage());
+          LEDSegment.BatteryIndicator.setColor(Lights.green.dim(1));
+        } else {
+          LEDSegment.BatteryIndicator.setFadeAnimation(Lights.green.dim(0.25), 1);
+        };
 
         // // Verify that all absolute encoders are connected
         // if (m_robotContainer.armSubsystem.isEncoderConnected())

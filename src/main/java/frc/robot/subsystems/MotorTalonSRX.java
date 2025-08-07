@@ -42,12 +42,12 @@ public class MotorTalonSRX extends SubsystemBase {
 
   public void setSpeed1(double speed) {
     m_motor1.set(ControlMode.PercentOutput, speed);
-    System.out.println("left output: " + speed);
+    //System.out.println("left output: " + speed);
   }
 
   public void setSpeed2(double speed) {
     m_motor2.set(ControlMode.PercentOutput, speed);
-    System.out.println("right output: " + speed);
+    //System.out.println("right output: " + speed);
   }
 
 @Override

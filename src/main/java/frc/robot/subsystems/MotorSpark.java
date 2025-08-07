@@ -40,11 +40,11 @@ public class MotorSpark extends SubsystemBase {
 
         public void setSpeed1(double speed) {
             sparkOne.set(speed);
-            System.out.println("spark left output: " + speed);
+            //System.out.println("spark left output: " + speed);
         }
 
         public void setSpeed2(double speed) {
             sparkOne.set(speed);
-            System.out.println("spark right output: " + speed);
+            //System.out.println("spark right output: " + speed);
         }
 }
