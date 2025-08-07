@@ -34,7 +34,7 @@ public class Lights extends SubsystemBase{
 
     static {
         if (RobotBase.isReal() && isReal) {
-            candle = new CANdle(LightsConstants.CANDLE_PORT, "CANivore");
+            candle = new CANdle(LightsConstants.CANDLE_PORT, "roboRIO");
         } else {
             candle = null;
         }
