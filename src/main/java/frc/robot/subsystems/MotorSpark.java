@@ -33,18 +33,14 @@ public class MotorSpark extends SubsystemBase {
       public void periodic() {
       }
     
-      /** This is a method that makes the roller spin */
-    //   public void runSpark1(double forward, double reverse) {
-    //     sparkOne.set(forward - reverse);
-    //   }
 
-        public void setSpeed1(double speed) {
-            sparkOne.set(speed);
-            //System.out.println("spark left output: " + speed);
-        }
+    public void setSpeed1(double speed) {
+        sparkOne.set(speed);
+        //System.out.println("spark left output: " + speed);
+    }
 
-        public void setSpeed2(double speed) {
-            sparkOne.set(speed);
-            //System.out.println("spark right output: " + speed);
-        }
+    public void setSpeed2(double speed) {
+        sparkOne.set(speed);
+        //System.out.println("spark right output: " + speed);
+    }
 }
