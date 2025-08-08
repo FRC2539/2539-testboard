@@ -18,7 +18,10 @@ public class ColorSensor extends SubsystemBase {
 
     public ColorSensor() {
         m_colorMatcher.addColorMatch(kWhiteTarget);
-        System.out.println("Sensor color: " + m_colorSensor.getColor().toString() + " prox: "+m_colorSensor.getProximity());
+        System.out.println("Sensor color: " + m_colorSensor.getColor().toString() +         
+        " raw color: "+m_colorSensor.getRawColor().toString() +
+        " prox: "+m_colorSensor.getProximity()
+        );
     }
 
     public String hasPiece() {
