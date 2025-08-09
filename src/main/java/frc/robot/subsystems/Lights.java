@@ -14,7 +14,7 @@ import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.util.Color;
+// import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.BooleanSupplier;
@@ -116,6 +116,7 @@ public class Lights extends SubsystemBase{
         ExtraBIndicator(5, 1, -1),
         PivotEncoderIndicator(6, 1, -1),
         AllianceIndicator(7, 1, -1),
+        BuckleIndicator(0,8,0),
         MainStrip(8, 500, 2);
 
         public final int startIndex;

@@ -4,16 +4,16 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.LogFileUtil;
+// import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
-import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.NT4Publisher;
-import org.littletonrobotics.junction.wpilog.WPILOGReader;
-import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+// import org.littletonrobotics.junction.Logger;
+// import org.littletonrobotics.junction.networktables.NT4Publisher;
+// import org.littletonrobotics.junction.wpilog.WPILOGReader;
+// import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.TimedRobot;
+// import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Lights;
@@ -40,7 +40,7 @@ public class Robot extends LoggedRobot {
   public void disabledPeriodic() {
     // Indicate if the battery is at voltage
         if (RobotController.getBatteryVoltage() > 12.3){
-          System.out.println("lights battery voltage: " + RobotController.getBatteryVoltage());
+          //System.out.println("lights battery voltage: " + RobotController.getBatteryVoltage());
           LEDSegment.BatteryIndicator.setColor(Lights.green.dim(1));
         } else {
           LEDSegment.BatteryIndicator.setFadeAnimation(Lights.green.dim(0.25), 1);

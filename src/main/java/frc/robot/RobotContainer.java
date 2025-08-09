@@ -9,7 +9,7 @@ import frc.lib.controller.LogitechController;
 import frc.robot.subsystems.MotorTalonSRX;
 import frc.robot.subsystems.MotorSpark;
 import frc.robot.subsystems.ColorSensor;
-import frc.robot.subsystems.Lights;
+// import frc.robot.subsystems.Lights;
 
 
 
@@ -40,7 +40,7 @@ public class RobotContainer {
 
         operatorController.getA().whileTrue(new RunCommand(() -> {
             String pieceType = colors.hasPiece();
-            System.out.println("Detected Piece: " + pieceType);
+            //System.out.println("Detected Piece: " + pieceType);
         }, colors));
 
         operatorController.getB().whileTrue(new RunCommand(() -> {
