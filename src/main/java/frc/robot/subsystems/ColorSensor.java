@@ -31,20 +31,20 @@ public class ColorSensor extends SubsystemBase {
         System.out.println("mcolor: "+matchResult.color.toString() +" color:  (R: " + (int) Math.round(detectedColor.red * 255) + ", G: " + (int) Math.round(detectedColor.green * 255) + ", B: " + (int) Math.round(detectedColor.blue * 255) + ") conf: " + matchResult.confidence);
 
         if (m_colorSensor.getProximity() > 130) {
-            if (matchResult.color.equals(kCoralTarget) && matchResult.confidence > 0.85) {
+            if (matchResult.color.equals(kCoralTarget) && matchResult.confidence > 0.88) {
                 LEDSegment.BuckleIndicator.setStrobeAnimation(Lights.white,.1);
                 //System.out.println("coral color: " + matchResult.color + " conf: " + matchResult.confidence);
                 return "coral: (R: " + (int) Math.round(detectedColor.red * 255) + ", G: " + (int) Math.round(detectedColor.green * 255) + ", B: " + (int) Math.round(detectedColor.blue * 255) + ")";
-            } else if (matchResult.color.equals(kAlgaeTarget) && matchResult.confidence > 0.85) {
+            } else if (matchResult.color.equals(kAlgaeTarget) && matchResult.confidence > 0.88) {
                 LEDSegment.BuckleIndicator.setStrobeAnimation(Lights.green,.1);
                 //System.out.println("algae color: " + matchResult.color + " conf: " + matchResult.confidence);
                 return "algae: (R: " + (int) Math.round(detectedColor.red * 255) + ", G: " + (int) Math.round(detectedColor.green * 255) + ", B: " + (int) Math.round(detectedColor.blue * 255) + ")";
             } else {
                 LEDSegment.BuckleIndicator.setColor(new Lights.Color(
-                    (int) (detectedColor.red * 255 * 2),
-                    (int) (detectedColor.green * 255 * 2),
+                    (int) (detectedColor.red * 255 *2),
+                    (int) (detectedColor.green * 255 *2),
                     (int) (detectedColor.blue * 255 *2)
-                ));
+                ).dim(1));
                 return "unknown: (R: " + (int) Math.round(detectedColor.red * 255) + ", G: " + (int) Math.round(detectedColor.green * 255) + ", B: " + (int) Math.round(detectedColor.blue * 255) + ")";
             }
         } else {
