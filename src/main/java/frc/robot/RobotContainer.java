@@ -3,13 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.lib.controller.LogitechController;
 //import frc.lib.controller.ThrustmasterJoystick;
 import frc.robot.subsystems.MotorTalonSRX;
 import frc.robot.subsystems.MotorSpark;
 import frc.robot.subsystems.ColorSensor;
-// import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Lights.LightsControlModule;
 
 
 
@@ -23,7 +25,7 @@ public class RobotContainer {
     private final MotorTalonSRX motors = new MotorTalonSRX();
     private final MotorSpark sparkmotors = new MotorSpark();
     private final ColorSensor colors = new ColorSensor();
-
+    private Lights LightsSubsystem = new Lights();
 
     
 
@@ -64,6 +66,12 @@ public class RobotContainer {
             motors
         )
         );
+        
+        LightsControlModule.Supplier_batteryVoltage(() -> RobotController.getBatteryVoltage());
+        LightsControlModule.Supplier_opControllerLeftX(() -> operatorController.getLeftXAxis().get());
+        LightsControlModule.Supplier_opControllerLeftY(() -> operatorController.getLeftYAxis().get());
+        LightsControlModule.Supplier_opControllerRightX(() -> operatorController.getRightXAxis().get());
+        LightsControlModule.Supplier_opControllerRightY(() -> operatorController.getRightYAxis().get());
     }
 
 
