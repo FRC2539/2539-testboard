@@ -8,8 +8,12 @@ import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import com.ctre.phoenix.led.FireAnimation;
+import com.ctre.phoenix.led.TwinkleAnimation;
+import com.ctre.phoenix.led.TwinkleOffAnimation;
 import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
+import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
+import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
@@ -152,7 +156,9 @@ public class Lights extends SubsystemBase{
         timeRemainingB,
         timeRemainingC,
         testProgress,
-        matchProgress
+        matchProgress,
+        twinkle,
+        twinkleOff
         }
 
         static mode lightMode = mode.disabled;
@@ -237,8 +243,7 @@ public class Lights extends SubsystemBase{
 
         public static void update() {
         // #region Emote Wheel
-        System.out.println(opControllerRightX.getAsDouble());
-        if (opControllerLeftMagnitude.getAsDouble() > 0.01) {
+        if (opControllerLeftMagnitude.getAsDouble() > 0.05) {
             cardinalDirection dir =
                 getJoystickCardinal(opControllerLeftX.getAsDouble(), opControllerLeftY.getAsDouble());
             switch (dir) {
@@ -257,7 +262,7 @@ public class Lights extends SubsystemBase{
             }
             return;
         }
-        if (opControllerRightMagnitude.getAsDouble() > 0.01) {
+        if (opControllerRightMagnitude.getAsDouble() > 0.05) {
             cardinalDirection dir =
                 getJoystickCardinal(opControllerRightX.getAsDouble(), opControllerRightY.getAsDouble());
             switch (dir) {
@@ -265,12 +270,12 @@ public class Lights extends SubsystemBase{
                 matchProgress();
                 break;
             case East:
-                autoFire();
+            twinkle();
                 break;
             case South:
-                matchProgress();
                 break;
             case West:
+            twinkleOff();
                 break;
             }
             return;
@@ -380,7 +385,7 @@ public class Lights extends SubsystemBase{
             timeRemainingC();
             return;
             } else {
-            timeRemainingB();
+            waiting();
             return;
             }
         }
@@ -475,8 +480,8 @@ public class Lights extends SubsystemBase{
         lightMode = mode.autoFire;
 
         LEDSegment.MainStrip.clearAnimation();
-        LEDSegment.MainStripLeft.setFireOverdriveAnimation(0.4);
-        LEDSegment.MainStripLeft.setFireOverdriveAnimation(0.4);
+        LEDSegment.MainStripLeft.setFireOverdriveAnimation(0.5);
+        LEDSegment.MainStripRight.setFireOverdriveAnimation(0.5);
         }
 
         public static void rainbow() {
@@ -598,26 +603,29 @@ public class Lights extends SubsystemBase{
 
         public static void timeRemainingA() {
         if (lightMode == mode.timeRemainingA) return;
+        lightMode = mode.timeRemainingA;
 
         LEDSegment.MainStrip.setColor(green);
-        LEDSegment.MainStripLeft.setFlowAnimation(green, 0.2);
-        LEDSegment.MainStripRight.setFlowAnimation(green, 0.2);
+        LEDSegment.MainStripLeft.setFadeAnimation(green, 0.91);
+        LEDSegment.MainStripRight.setFadeAnimation(green, 0.91);
         }
 
         public static void timeRemainingB() {
         if (lightMode == mode.timeRemainingB) return;
+        lightMode = mode.timeRemainingB;
 
         LEDSegment.MainStrip.setColor(yellow);
-        LEDSegment.MainStripLeft.setFlowAnimation(yellow, 0.35);
-        LEDSegment.MainStripRight.setFlowAnimation(yellow, 0.35);
+        LEDSegment.MainStripLeft.setFadeAnimation(yellow, 0.975);
+        LEDSegment.MainStripRight.setFadeAnimation(yellow, 0.975);
         }
 
         public static void timeRemainingC() {
         if (lightMode == mode.timeRemainingC) return;
+        lightMode = mode.timeRemainingC;
 
         LEDSegment.MainStrip.setColor(red);
-        LEDSegment.MainStripLeft.setStrobeAnimation(red, 0.5);
-        LEDSegment.MainStripRight.setStrobeAnimation(red, 0.5);
+        LEDSegment.MainStripLeft.setFadeAnimation(red, 1);
+        LEDSegment.MainStripRight.setFadeAnimation(red, 1);
         }
 
         public static void testProgress() {
@@ -635,10 +643,11 @@ public class Lights extends SubsystemBase{
         }
 
         public static void matchProgress() {
-        if (lightMode != mode.testProgress) {
+        if (lightMode != mode.matchProgress) {
             LEDSegment.MainStrip.clearAnimation();
             LEDSegment.MainStripLeft.clearAnimation();
             LEDSegment.MainStripRight.clearAnimation();
+            lightMode = mode.matchProgress;
         }
         double seconds = RobotStatusTimer.get();
         double multiplier = 0;
@@ -662,6 +671,25 @@ public class Lights extends SubsystemBase{
         }
         LEDSegment.MainStrip.setColor(green);
         }
+
+        public static void twinkle() {
+            if (lightMode == mode.twinkle) return;
+            lightMode = mode.twinkle;
+    
+            LEDSegment.MainStrip.setTwinkleAnimation(green, 0.5, TwinklePercent.Percent100);
+            LEDSegment.MainStripLeft.setTwinkleAnimation(red, 0.5, TwinklePercent.Percent30);
+            LEDSegment.MainStripRight.setTwinkleAnimation(red, 0.5, TwinklePercent.Percent30);
+            }
+            public static void twinkleOff() {
+                if (lightMode == mode.twinkleOff) return;
+                lightMode = mode.twinkleOff;
+        
+                LEDSegment.MainStrip.setTwinkleOffAnimation(green, 0.5, TwinkleOffPercent.Percent100);
+                LEDSegment.MainStripLeft.setTwinkleOffAnimation(red, 0.5, TwinkleOffPercent.Percent30);
+                LEDSegment.MainStripRight.setTwinkleOffAnimation(red, 0.5, TwinkleOffPercent.Percent30);
+                }
+
+
 
         static void updateProgressBar(LEDSegment segment, double distance) {
         // This needs to be tested again. I believe that one of the sides wasn't decreasing, but this may have been fixed after the robot was dismantled.
@@ -720,7 +748,7 @@ public class Lights extends SubsystemBase{
         BuckleIndicator(0,8,0, false),
         MainStrip(8, 127, 2, false),
         MainStripLeft(8, 53, 3, false, red, yellow),
-        MainStripRight(61, 73, 4, true, red, yellow);
+        MainStripRight(61, 74, 4, true, red, yellow);
 
         public final int startIndex;
         public final int segmentSize;
@@ -844,7 +872,16 @@ public class Lights extends SubsystemBase{
         }
 
         public void setFireOverdriveAnimation(double speed) {
-        setAnimation(new FireAnimation(1, speed, segmentSize, 0.75, 0.6, reverseMode, startIndex));
+        setAnimation(new FireAnimation(1, speed, segmentSize, 0.5, 0.15, reverseMode, startIndex));
+        }
+
+        public void setTwinkleAnimation(Color color, double speed, TwinklePercent percent)
+        {   
+            setAnimation(new TwinkleAnimation(color.red, color.green, color.blue, 0, speed, segmentSize, percent, startIndex));
+        }
+        public void setTwinkleOffAnimation(Color color, double speed, TwinkleOffAnimation.TwinkleOffPercent divider)
+        {
+            setAnimation(new TwinkleOffAnimation(color.red, color.green, color.blue, 0, speed, segmentSize, divider, startIndex));
         }
     }
 
