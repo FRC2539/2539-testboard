@@ -38,10 +38,10 @@ public class RobotContainer {
         //operatorController.getA().whileTrue(motors.setSpeed1(1.0)).whileFalse(motors.setSpeed1(0.0));
         //operatorController.getB().whileTrue(motors.setSpeed2(1.0)).whileFalse(motors.setSpeed2(0.0));
 
-        operatorController.getA().whileTrue(new RunCommand(() -> {
-            String pieceType = colors.hasPiece();
-            //System.out.println("Detected Piece: " + pieceType);
-        }, colors));
+        // operatorController.getA().whileTrue(new RunCommand(() -> {
+        //     String pieceType = colors.hasPiece();
+        //     //System.out.println("Detected Piece: " + pieceType);
+        // }, colors));
 
         operatorController.getB().whileTrue(new RunCommand(() -> {
             boolean objectPresent = colors.isObjectPresent();
@@ -53,13 +53,18 @@ public class RobotContainer {
             () -> {
                 double leftX = operatorController.getLeftYAxis().getAsDouble(); 
                 double rightX = operatorController.getRightYAxis().getAsDouble();
+                
                 motors.setSpeed1(leftX);
+                //motors.setSpeed2(rightX);
                 motors.setSpeed2(rightX);
 
                 double sparkleftX = operatorControllerTwo.getLeftYAxis().getAsDouble(); 
                 double sparkrightX = operatorControllerTwo.getRightYAxis().getAsDouble();
                 sparkmotors.setSpeed1(sparkleftX);
                 sparkmotors.setSpeed2(sparkrightX);
+
+                
+
             },
             motors
         )

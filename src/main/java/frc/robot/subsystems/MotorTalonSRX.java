@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,12 +15,20 @@ public class MotorTalonSRX extends SubsystemBase {
   /** Creates a new SparkMax brushless motor */
   TalonSRX m_motor1;
   TalonSRX m_motor2;
+  TalonFX m_motor3;
+  TalonFX m_motor4;
+
 
   /** Creates a new DriveSubsystem. */
   public MotorTalonSRX() {
     //m_proximitySensor = new DigitalInput(0);
     m_motor1 = new TalonSRX(Constants.MotorOne.MOTOR_ID);
     m_motor2 = new TalonSRX(Constants.MotorTwo.MOTOR_ID);
+    m_motor3 = new TalonFX(2);
+    m_motor4 = new TalonFX(3);
+    
+
+    
   }
 
   /** Run motor at half speed during command */
@@ -36,6 +46,10 @@ public class MotorTalonSRX extends SubsystemBase {
         });
   }
 
+
+  
+  
+
   // public boolean isSensorActive() {
   //   return m_proximitySensor.get();
   // }
@@ -46,7 +60,15 @@ public class MotorTalonSRX extends SubsystemBase {
   }
 
   public void setSpeed2(double speed) {
-    m_motor2.set(ControlMode.PercentOutput, speed);
+    m_motor3.set(speed);
+    //System.out.println("right output: " + speed);
+  }
+  public void setSpeed3(double speed) {
+    m_motor3.set(speed);
+    //System.out.println("right output: " + speed);
+  }
+  public void setSpeed4(double speed) {
+    m_motor4.set(speed);
     //System.out.println("right output: " + speed);
   }
 
