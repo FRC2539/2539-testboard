@@ -16,14 +16,18 @@ import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Lights;
-import frc.robot.subsystems.Lights.LEDSegment;
+//import frc.robot.subsystems.Lights;
+//import frc.robot.subsystems.Lights.LEDSegment;
+import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.subsystems.LightsSubsystem.LEDSegment;
+
+import com.ctre.phoenix6.signals.RGBWColor;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   public final RobotContainer m_robotContainer;
-
+  
   public Robot() {
     m_robotContainer = new RobotContainer();
   }
@@ -41,9 +45,9 @@ public class Robot extends LoggedRobot {
     // Indicate if the battery is at voltage
         if (RobotController.getBatteryVoltage() > 12.3){
           //System.out.println("lights battery voltage: " + RobotController.getBatteryVoltage());
-          LEDSegment.BatteryIndicator.setColor(Lights.green.dim(1));
+          LEDSegment.BatteryIndicator.setSolidColor(new RGBWColor(1, 230, 0));
         } else {
-          LEDSegment.BatteryIndicator.setFadeAnimation(Lights.green.dim(0.25), 1);
+          LEDSegment.BatteryIndicator.setFadeAnimation(new RGBWColor(1, 230, 0), 1);
         };
 
         // // Verify that all absolute encoders are connected
@@ -52,12 +56,12 @@ public class Robot extends LoggedRobot {
         // else LEDSegment.PivotEncoderIndicator.fullClear();
 
         // Indicate once the driver station is connected
-        if (DriverStation.isDSAttached())
-            LEDSegment.DriverstationIndicator.setColor(Lights.orange.dim(1));
-        else LEDSegment.DriverstationIndicator.fullClear();
+        // if (DriverStation.isDSAttached())
+        //     LEDSegment.DriverstationIndicator.setColor(Lights.orange.dim(1));
+        // else LEDSegment.DriverstationIndicator.fullClear();
 
-        // Passive Main LED Mode
-        LEDSegment.MainStrip.setFadeAnimation(Lights.orange, 0.5);
+        // // Passive Main LED Mode
+        // LEDSegment.MainStrip.setFadeAnimation(Lights.orange, 0.5);
   }
 
   @Override
