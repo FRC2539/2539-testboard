@@ -58,10 +58,11 @@ public class RobotContainer {
         new RunCommand(
             () -> {
                 double leftX = operatorController.getLeftYAxis().getAsDouble(); 
-                //double rightX = operatorController.getRightYAxis().getAsDouble();
+                double rightX = operatorController.getRightYAxis().getAsDouble();
 
-                motors.setSpeed1(leftX);
-                //motors.setSpeed2(rightX);
+                motors.setSpeedLeft(leftX);
+                motors.setSpeedRight(rightX);
+                
                 // motors.setSpeed2(rightX);
 
                 // double sparkleftX = operatorControllerTwo.getLeftYAxis().getAsDouble(); 
