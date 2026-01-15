@@ -45,42 +45,13 @@ public class LightsSubsystem extends SubsystemBase {
 
   static {
     if (RobotBase.isReal() && isReal) {
-      candle = new CANdle(LightsConstants.CANDLE_PORT, "CANivore");
+      candle = new CANdle(LightsConstants.CANDLE_PORT, "rio");
       RobotStatusTimer = new Timer();
       AlertTimer = new Timer();
     } else {
       candle = null;
     }
   }
-
-  public static BooleanSupplier isIntakingSup =
-      (() -> {
-        return false;
-      });
-  public static BooleanSupplier isStraightSup =
-      (() -> {
-        return false;
-      });
-  public static BooleanSupplier isCradledSup =
-      (() -> {
-        return false;
-      });
-  public static BooleanSupplier isLoadedSup =
-      (() -> {
-        return false;
-      });
-  public static BooleanSupplier isAligning =
-      (() -> {
-        return false;
-      });
-  public static DoubleSupplier batteryVoltage =
-      (() -> {
-        return 10;
-      });
-  public static BooleanSupplier armAtPosition =
-      (() -> {
-        return true;
-      });
 
   // Time since last switch of the robot status (disabled => teleop, teleop => estop, etc)
   static Timer RobotStatusTimer;
@@ -138,12 +109,12 @@ public class LightsSubsystem extends SubsystemBase {
 
   public Command defaultCommand() {
     return run(() -> {
-          Alerts.update();
+          //Alerts.update();
           Alerts.apply();
 
           if (!DriverStation.isDSAttached()) {
-            setBrightness(0.5);
-            animationTrigger.fade(white, 5);
+            //setBrightness(0.5);
+            //animationTrigger.fade(white, 5);
             return;
           }
           if (DriverStation.isEStopped()) {
@@ -154,7 +125,7 @@ public class LightsSubsystem extends SubsystemBase {
               if (!timerEnabled.get()) RobotStatusTimer.stop();
               setBrightness(1);
             }
-            animationTrigger.fade(red, 0.25);
+            //animationTrigger.fade(red, 0.25);
             return;
           }
           if (DriverStation.isDisabled()) {
@@ -164,16 +135,16 @@ public class LightsSubsystem extends SubsystemBase {
               RobotStatusTimer.start();
               if (!timerEnabled.get()) RobotStatusTimer.stop();
             }
-            // Scale brightness to 0 over time
-            if (RobotStatusTimer.get() > 300) { // Turn off after 5 minutes
-              animationTrigger.off();
-              return;
-            } else setBrightness(Math.max(0, Math.min(1.0, 1.0 - (RobotStatusTimer.get() / 300))));
+            // // Scale brightness to 0 over time
+            // if (RobotStatusTimer.get() > 300) { // Turn off after 5 minutes
+            //   //animationTrigger.off();
+            //   return;
+            // } else setBrightness(Math.max(0, Math.min(1.0, 1.0 - (RobotStatusTimer.get() / 300))));
 
-            if (reachedEndOfMatch) {
-              animationTrigger.rainbow(1, false);
-              return;
-            }
+            // if (reachedEndOfMatch) {
+            //   //animationTrigger.rainbow(1, false);
+            //   return;
+            // }
 
             // Animation swapper for testing | time per v    v amount of cases
             // switch (((int) RobotStatusTimer.get() / 10) % 2) {
@@ -185,127 +156,128 @@ public class LightsSubsystem extends SubsystemBase {
             //     return;
             // }
 
-            if (isLoadedSup.getAsBoolean()) animationTrigger.fireOverdrive();
-            else animationTrigger.fire();
-            return;
+            // if (isLoadedSup.getAsBoolean()) animationTrigger.fireOverdrive();
+            // else //animationTrigger.fire();
+            // return;
           }
 
-          if (DriverStation.isTeleop()) {
-            if (lastDriveMode != DriveMode.teleop) {
-              lastDriveMode = DriveMode.teleop;
-              RobotStatusTimer.reset();
-              RobotStatusTimer.start();
-              if (!timerEnabled.get()) RobotStatusTimer.stop();
-              reachedEndOfMatch = false;
-              setBrightness(1.0);
-            }
+          // if (DriverStation.isTeleop()) {
+          //   if (lastDriveMode != DriveMode.teleop) {
+          //     lastDriveMode = DriveMode.teleop;
+          //     RobotStatusTimer.reset();
+          //     RobotStatusTimer.start();
+          //     if (!timerEnabled.get()) RobotStatusTimer.stop();
+          //     reachedEndOfMatch = false;
+          //     setBrightness(1.0);
+          //   }
 
-            if (isAligning.getAsBoolean()) {
-              int passes = 0;
+          //   if (isAligning.getAsBoolean()) {
+          //     int passes = 0;
 
-              if (AligningDistance < 0.25) passes++;
-              if (AligningDistance < 0.5) passes++;
-              if (AligningDistance > 0.75) passes--;
-              if (armAtPosition.getAsBoolean()) passes++;
+          //     if (AligningDistance < 0.25) passes++;
+          //     if (AligningDistance < 0.5) passes++;
+          //     if (AligningDistance > 0.75) passes--;
+          //     if (armAtPosition.getAsBoolean()) passes++;
 
-              switch (passes) {
-                case 0:
-                  animationTrigger.solid(red);
-                  return;
-                case 1:
-                  animationTrigger.solid(orange);
-                  return;
-                case 2:
-                  animationTrigger.solid(yellow);
-                  return;
-                case 3:
-                  animationTrigger.solid(green);
-                  return;
-                default:
-                  animationTrigger.solid(red);
-                  return;
-              }
-            }
+          //     switch (passes) {
+          //       case 0:
+          //         //animationTrigger.solid(red);
+          //         return;
+          //       case 1:
+          //         //animationTrigger.solid(orange);
+          //         return;
+          //       case 2:
+          //         //animationTrigger.solid(yellow);
+          //         return;
+          //       case 3:
+          //         //animationTrigger.solid(green);
+          //         return;
+          //       default:
+          //         //animationTrigger.solid(red);
+          //         return;
+          //     }
+          //   }
 
-            if (isLoadedSup.getAsBoolean()) {
-              animationTrigger.fade(white, 0.25);
-              return;
-            }
-            if (isCradledSup.getAsBoolean()) {
-              animationTrigger.strobe(blue, 0.25);
-              return;
-            }
-            if (isStraightSup.getAsBoolean()) {
-              animationTrigger.fade(yellow, 0.25);
-              return;
-            }
-            if (isIntakingSup.getAsBoolean()) {
-              animationTrigger.fade(orange, 0.25);
-              return;
-            }
+          //   if (isLoadedSup.getAsBoolean()) {
+          //     //animationTrigger.fade(white, 0.25);
+          //     return;
+          //   }
+          //   if (isCradledSup.getAsBoolean()) {
+          //     //animationTrigger.strobe(blue, 0.25);
+          //     return;
+          //   }
+          //   if (isStraightSup.getAsBoolean()) {
+          //     //animationTrigger.fade(yellow, 0.25);
+          //     return;
+          //   }
+          //   if (isIntakingSup.getAsBoolean()) {
+          //     //animationTrigger.fade(orange, 0.25);
+          //     return;
+          //   }
 
-            double matchTimer = RobotStatusTimer.get();
-            if (matchTimer < 120) {
-              animationTrigger.fireOverdrive();
-              return;
-            } else if (matchTimer < 125) {
-              animationTrigger.fade(green, 0.5);
-              reachedEndOfMatch = true;
-              return;
-            } else if (matchTimer < 130) {
-              animationTrigger.fade(yellow, 0.25);
-              return;
-            } else if (matchTimer < 135) {
-              animationTrigger.strobe(red, 0.2);
-              return;
-            }
+          //   double matchTimer = RobotStatusTimer.get();
+          //   if (matchTimer < 120) {
+          //     //animationTrigger.fireOverdrive();
+          //     return;
+          //   } else if (matchTimer < 125) {
+          //     //animationTrigger.fade(green, 0.5);
+          //     reachedEndOfMatch = true;
+          //     return;
+          //   } else if (matchTimer < 130) {
+          //     //animationTrigger.fade(yellow, 0.25);
+          //     return;
+          //   } else if (matchTimer < 135) {
+          //     //animationTrigger.strobe(red, 0.2);
+          //     return;
+          //   }
 
-            animationTrigger.rainbow(1, false);
-            return;
-          }
-          if (DriverStation.isAutonomous()) {
-            if (lastDriveMode != DriveMode.autonomous) {
-              lastDriveMode = DriveMode.autonomous;
-              RobotStatusTimer.reset();
-              RobotStatusTimer.start();
-              if (!timerEnabled.get()) RobotStatusTimer.stop();
-              setBrightness(1.0);
-            }
+          //   //animationTrigger.rainbow(1, false);
+          //   return;
+          // }
+          // if (DriverStation.isAutonomous()) {
+          //   if (lastDriveMode != DriveMode.autonomous) {
+          //     lastDriveMode = DriveMode.autonomous;
+          //     RobotStatusTimer.reset();
+          //     RobotStatusTimer.start();
+          //     if (!timerEnabled.get()) RobotStatusTimer.stop();
+          //     setBrightness(1.0);
+          //   }
 
-            if (isLoadedSup.getAsBoolean()) {
-              animationTrigger.fade(white, 0.25);
-              return;
-            }
-            if (isCradledSup.getAsBoolean()) {
-              animationTrigger.strobe(blue, 0.25);
-              return;
-            }
-            if (isStraightSup.getAsBoolean()) {
-              animationTrigger.fade(yellow, 0.25);
-              return;
-            }
-            if (isIntakingSup.getAsBoolean()) {
-              animationTrigger.fade(orange, 0.25);
-              return;
-            }
+          //   if (isLoadedSup.getAsBoolean()) {
+          //     //animationTrigger.fade(white, 0.25);
+          //     return;
+          //   }
+          //   if (isCradledSup.getAsBoolean()) {
+          //     //animationTrigger.strobe(blue, 0.25);
+          //     return;
+          //   }
+          //   if (isStraightSup.getAsBoolean()) {
+          //     //animationTrigger.fade(yellow, 0.25);
+          //     return;
+          //   }
+          //   if (isIntakingSup.getAsBoolean()) {
+          //     //animationTrigger.fade(orange, 0.25);
+          //     return;
+          //   }
 
-            double matchTimer = RobotStatusTimer.get();
-            if (matchTimer < 12) {
-              animationTrigger.fade(green, 0.5);
-              return;
-            } else if (matchTimer < 13) {
-              animationTrigger.fade(green, 0.5);
-              return;
-            } else if (matchTimer < 14) {
-              animationTrigger.fade(yellow, 0.5);
-              return;
-            } else if (matchTimer < 15) {
-              animationTrigger.fade(red, 0.5);
-              return;
-            }
+          //   double matchTimer = RobotStatusTimer.get();
+          //   if (matchTimer < 12) {
+          //     //animationTrigger.fade(green, 0.5);
+          //     return;
+          //   } else if (matchTimer < 13) {
+          //     //animationTrigger.fade(green, 0.5);
+          //     return;
+          //   } else if (matchTimer < 14) {
+          //     //animationTrigger.fade(yellow, 0.5);
+          //     return;
+          //   } else if (matchTimer < 15) {
+          //     //animationTrigger.fade(red, 0.5);
+          //     return;
+          //   }
 
-            return;
-          }
+          //   return;
+          // }
+
           if (DriverStation.isTest()) {
             if (lastDriveMode != DriveMode.test) {
               lastDriveMode = DriveMode.test;
@@ -321,11 +293,20 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   public static enum LEDSegment {
-    BatteryIndicator(1, 3, 0),
-    MainStrip(8, 115, 0),
-    MainStripFront(8, 62, 1, false),
-    MainStripBack(70, 53, 2, true),
-    MainStripTop(55, 30, 3, false);
+    //BatteryIndicator(1, 1, 0),
+    //MainStrip(8, 115, 0),
+    //MainStripFront(8, 62, 1, false),
+    //MainStripBack(70, 53, 2, true),
+    //MainStripTop(55, 30, 3, false),
+    Buckle1(0,1,0),
+    Buckle2(1,1,0),
+    Buckle3(2,1,0),
+    Buckle4(3,1,0),
+    Buckle5(4,1,0),
+    Buckle6(5,1,0),
+    Buckle7(6,1,0),
+    Buckle8(7,1,0);
+
 
     // Parameters
     public final int startIndex;
@@ -577,91 +558,91 @@ public class LightsSubsystem extends SubsystemBase {
     setBrightness(1.0);
   }
 
-  static class animationTrigger {
-    public static void off() {
-      LEDSegment.MainStrip.clearAnimation();
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  // static class animationTrigger {
+  //   public static void off() {
+  //     LEDSegment.MainStrip.clearAnimation();
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void solid(RGBWColor color) {
-      LEDSegment.MainStrip.setSolidColor(color);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void solid(RGBWColor color) {
+  //     LEDSegment.MainStrip.setSolidColor(color);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void strobe(RGBWColor color, double period) {
-      LEDSegment.MainStrip.setStrobeAnimation(color, period);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void strobe(RGBWColor color, double period) {
+  //     LEDSegment.MainStrip.setStrobeAnimation(color, period);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void fade(RGBWColor color, double period) {
-      LEDSegment.MainStrip.setFadeAnimation(color, period);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void fade(RGBWColor color, double period) {
+  //     LEDSegment.MainStrip.setFadeAnimation(color, period);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void rgbFade(double period) {
-      LEDSegment.MainStrip.setRGBFadeAnimation(period);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void rgbFade(double period) {
+  //     LEDSegment.MainStrip.setRGBFadeAnimation(period);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void rainbow(double period, boolean inverted) {
-      LEDSegment.MainStrip.setRainbowAnimation(period, inverted);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void rainbow(double period, boolean inverted) {
+  //     LEDSegment.MainStrip.setRainbowAnimation(period, inverted);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void flow(RGBWColor color, double period, boolean inverted) {
-      LEDSegment.MainStrip.setFlowAnimation(color, period, inverted);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void flow(RGBWColor color, double period, boolean inverted) {
+  //     LEDSegment.MainStrip.setFlowAnimation(color, period, inverted);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void larson(RGBWColor color, double period, int size) {
-      LEDSegment.MainStrip.setLarsonAnimation(color, period, size);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void larson(RGBWColor color, double period, int size) {
+  //     LEDSegment.MainStrip.setLarsonAnimation(color, period, size);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void twinkle(RGBWColor color, double period, int percentage) {
-      LEDSegment.MainStrip.setTwinkleAnimation(color, period, percentage);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void twinkle(RGBWColor color, double period, int percentage) {
+  //     LEDSegment.MainStrip.setTwinkleAnimation(color, period, percentage);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void twinkleOff(RGBWColor color, double period, int percentage) {
-      LEDSegment.MainStrip.setTwinkleOffAnimation(color, period, percentage);
-      LEDSegment.MainStripFront.clearAnimation();
-      LEDSegment.MainStripBack.clearAnimation();
-    }
+  //   public static void twinkleOff(RGBWColor color, double period, int percentage) {
+  //     LEDSegment.MainStrip.setTwinkleOffAnimation(color, period, percentage);
+  //     LEDSegment.MainStripFront.clearAnimation();
+  //     LEDSegment.MainStripBack.clearAnimation();
+  //   }
 
-    public static void fire() {
-      LEDSegment.MainStrip.clearAnimation();
-      LEDSegment.MainStripFront.setFireAnimation(0.4, 0.4, false, 40);
-      LEDSegment.MainStripBack.setFireAnimation(0.4, 0.4, false, 40);
-    }
+  //   public static void fire() {
+  //     LEDSegment.MainStrip.clearAnimation();
+  //     LEDSegment.MainStripFront.setFireAnimation(0.4, 0.4, false, 40);
+  //     LEDSegment.MainStripBack.setFireAnimation(0.4, 0.4, false, 40);
+  //   }
 
-    public static void fireOverdrive() {
-      fireOverdrive(false);
-    }
+  //   public static void fireOverdrive() {
+  //     fireOverdrive(false);
+  //   }
 
-    public static void fireOverdrive(boolean inverted) {
-      LEDSegment.MainStrip.clearAnimation();
-      LEDSegment.MainStripFront.setFireAnimation(0.35, 0.5, inverted, 55);
-      LEDSegment.MainStripBack.setFireAnimation(0.35, 0.5, inverted, 55);
-    }
+  //   public static void fireOverdrive(boolean inverted) {
+  //     LEDSegment.MainStrip.clearAnimation();
+  //     LEDSegment.MainStripFront.setFireAnimation(0.35, 0.5, inverted, 55);
+  //     LEDSegment.MainStripBack.setFireAnimation(0.35, 0.5, inverted, 55);
+  //   }
 
-    public static void topDisable() {
-      LEDSegment.MainStripTop.clearAnimation();
-    }
+  //   public static void topDisable() {
+  //     LEDSegment.MainStripTop.clearAnimation();
+  //   }
 
-    public static void topSolid(RGBWColor color) {
-      LEDSegment.MainStripTop.setSolidColor(color);
-    }
-  }
+  //   public static void topSolid(RGBWColor color) {
+  //     LEDSegment.MainStripTop.setSolidColor(color);
+  //   }
+  // }
 
   static class Alerts {
     public static enum AlertType {
@@ -680,9 +661,9 @@ public class LightsSubsystem extends SubsystemBase {
       }
     }
 
-    public static void update() {
-      testVoltage();
-    }
+    // public static void update() {
+    //   testVoltage();
+    // }
 
     static boolean setAlertType(AlertType type) {
       if (type.priority < LastAlert.priority) return false;
@@ -697,18 +678,18 @@ public class LightsSubsystem extends SubsystemBase {
       return true;
     }
 
-    static boolean testVoltage() {
-      if (batteryVoltage.getAsDouble() < 8) {
-        if (batteryVoltage.getAsDouble() < 7) return setAlertType(AlertType.voltageCritical);
-        else return setAlertType(AlertType.voltageCritical);
-      }
-      return false;
-    }
+    // static boolean testVoltage() {
+    //   if (batteryVoltage.getAsDouble() < 8) {
+    //     if (batteryVoltage.getAsDouble() < 7) return setAlertType(AlertType.voltageCritical);
+    //     else return setAlertType(AlertType.voltageCritical);
+    //   }
+    //   return false;
+    // }
 
     public static void apply() {
       if (AlertTimer.get() > LastAlert.time) {
         // Clear the alert
-        animationTrigger.topDisable();
+        //animationTrigger.topDisable();
         LastAlert = AlertType.none;
       } else {
         // Trigger the last alert
@@ -716,10 +697,10 @@ public class LightsSubsystem extends SubsystemBase {
           case none:
             break;
           case voltageLow:
-            animationTrigger.topSolid(tryScaleBrightness(yellow));
+            //animationTrigger.topSolid(tryScaleBrightness(yellow));
             break;
           case voltageCritical:
-            animationTrigger.topSolid(tryScaleBrightness(red));
+            //animationTrigger.topSolid(tryScaleBrightness(red));
             break;
         }
       }

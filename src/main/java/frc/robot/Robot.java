@@ -45,9 +45,9 @@ public class Robot extends LoggedRobot {
     // Indicate if the battery is at voltage
         if (RobotController.getBatteryVoltage() > 12.3){
           //System.out.println("lights battery voltage: " + RobotController.getBatteryVoltage());
-          LEDSegment.BatteryIndicator.setSolidColor(new RGBWColor(1, 230, 0));
+          //LEDSegment.BatteryIndicator.setSolidColor(new RGBWColor(256, 0, 0));
         } else {
-          LEDSegment.BatteryIndicator.setFadeAnimation(new RGBWColor(1, 230, 0), 1);
+          //LEDSegment.BatteryIndicator.setFadeAnimation(new RGBWColor(256, 0, 0), 1);
         };
 
         // // Verify that all absolute encoders are connected

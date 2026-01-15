@@ -1,14 +1,19 @@
 package frc.robot.subsystems;
 
+import java.awt.Color;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.RGBWColor;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.LightsSubsystem.LEDSegment;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotorTalonSRX extends SubsystemBase {
     /** Creates a new Digital Sensor */
@@ -60,7 +65,7 @@ public class MotorTalonSRX extends SubsystemBase {
 
   public void setSpeed1(double speed) {
     m_motor1.setControl(new DutyCycleOut(speed*-1));
-    //System.out.println("left output: " + speed);
+
   }
 
   public void setSpeed2() {
@@ -84,8 +89,29 @@ public class MotorTalonSRX extends SubsystemBase {
 
 @Override
 public void periodic() {
-  // This method will be called once per scheduler run
+  double velocity = m_motor1.getVelocity().getValueAsDouble();
+ 
+    double[] thresholds = {2, 14, 24, 38, 52, 64, 78, 92};
+    LEDSegment[] buckles = {
+        LEDSegment.Buckle1, LEDSegment.Buckle2, LEDSegment.Buckle3, LEDSegment.Buckle4,
+        LEDSegment.Buckle5, LEDSegment.Buckle6, LEDSegment.Buckle7, LEDSegment.Buckle8
+    };
 
+    for (int i = 0; i < thresholds.length; i++) {
+        if (velocity >= thresholds[i]) {
+            buckles[i].setSolidColor(new RGBWColor(255, 0, 0, 0));
+        } else if (velocity <= -thresholds[i]) {
+            buckles[i].setSolidColor(new RGBWColor(0, 255, 0, 0));
+        } else {
+            buckles[i].setSolidColor(new RGBWColor(0, 0, 0, 0));
+        }
+    }
+  
+  
+
+
+  SmartDashboard.putNumber("Motor 1 Velocity (RPS)", velocity);
+  SmartDashboard.putNumber("Motor 1 Duty Cycle", m_motor1.getDutyCycle().getValueAsDouble());
 }
 
 }
