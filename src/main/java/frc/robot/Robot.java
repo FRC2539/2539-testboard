@@ -16,10 +16,8 @@ import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-//import frc.robot.subsystems.Lights;
-//import frc.robot.subsystems.Lights.LEDSegment;
-import frc.robot.subsystems.LightsSubsystem;
-import frc.robot.subsystems.LightsSubsystem.LEDSegment;
+import frc.robot.subsystems.lights.LightsSubsystem;
+// import frc.robot.subsystems.lights.LightsSubsystem.LEDSegment;
 
 import com.ctre.phoenix6.signals.RGBWColor;
 
