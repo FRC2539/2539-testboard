@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.lib.controller.LogitechController;
 //import frc.lib.controller.ThrustmasterJoystick;
 import frc.robot.subsystems.MotorTalonSRX;
+import frc.robot.subsystems.InputSubsystem;
 import frc.robot.subsystems.MotorSpark;
 // import frc.robot.subsystems.ColorSensor;
 // import frc.robot.subsystems.Lights;
@@ -23,6 +24,8 @@ public class RobotContainer {
     private final MotorTalonSRX motors = new MotorTalonSRX();
     private final MotorSpark sparkmotors = new MotorSpark();
     // private final ColorSensor colors = new ColorSensor();
+
+    private final InputSubsystem inputSubsystem = new InputSubsystem();
 
 
     
