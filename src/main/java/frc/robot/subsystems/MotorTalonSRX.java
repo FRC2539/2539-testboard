@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.awt.Color;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -22,8 +20,6 @@ public class MotorTalonSRX extends SubsystemBase {
   /** Creates a new SparkMax brushless motor */
   TalonFX m_motor1;
   TalonFX m_motor2;
-  TalonSRX m_motor3;
-  TalonSRX m_motor4;
 
 
   /** Creates a new DriveSubsystem. */
@@ -33,13 +29,9 @@ public class MotorTalonSRX extends SubsystemBase {
     m_motor1.setNeutralMode(NeutralModeValue.Coast);
 
     m_motor2 = new TalonFX(Constants.MotorTwo.MOTOR_ID);  
+    
     m_motor2.setNeutralMode(NeutralModeValue.Coast);
 
-    m_motor3 = new TalonSRX(2);
-    m_motor4 = new TalonSRX(3);
-    
-
-    
   }
 
   /** Run motor at half speed during command */
